@@ -1,0 +1,4 @@
+build/
+dist/
+*.pyc
+ckanext_annotations.egg-info/

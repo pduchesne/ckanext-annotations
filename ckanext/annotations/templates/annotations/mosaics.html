@@ -1,0 +1,11 @@
+{% extends "dataviewer/base.html" %}
+{% block page %}
+
+<div width="100%">
+  <a href="{{ c.mosaics_server_url }}#/preview?url={{ urlencode(c.url) }}" target="_blank">Preview in Mosaics</a>
+</div>
+<iframe name="mosaicsFrame" src="{{ c.mosaics_server_url }}#/preview?url={{ urlencode(c.url) }}&embed=true" frameborder="0" height="500" width="100%">
+</iframe>
+
+{% endblock %}
+
