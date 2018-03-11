@@ -24,7 +24,7 @@ class AnnotationPlugin(p.SingletonPlugin):
     """
 
     # inheriting from IDomainObjectModification makes sure that we get notifications about updates with resources
-    p.implements(p.IDomainObjectModification)
+    #p.implements(p.IDomainObjectModification)
     # IConfigurable makes sure we can reuse the config class
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer, inherit=True)
@@ -42,11 +42,6 @@ class AnnotationPlugin(p.SingletonPlugin):
         self.mosaics_pass = config.get("mosaics.pass","admin")
         self.mosaics_server_url = config.get("mosaics.server_url","http://localhost/api")
 
-
-        req = urllib2.Request(self.tdt_host+"discovery")
-        opener = urllib2.build_opener()
-        f = opener.open(req)
-        self.tdtDiscovery = json.load(f)
 
     def update_config(self, config):
         p.toolkit.add_public_directory(config, 'public')
@@ -66,6 +61,15 @@ class AnnotationPlugin(p.SingletonPlugin):
                     self.create_tdt_source(entity)
         return
     '''
+
+    def info(self):
+        return {'name': 'annotations',
+                'title': 'Annotations',
+                'icon': 'comments',
+                'iframed': False,
+                'default_title': p.toolkit._('Annotations'),
+                'schema': {},
+                }
 
     def can_view(self, data_dict):
         format_lower = data_dict['resource'].get('format', '').lower()
@@ -116,6 +120,6 @@ class AnnotationPlugin(p.SingletonPlugin):
     def get_helpers(self):
         return {
             'jsondump' : json.dumps,
-            'urlencode' : urllib.urlencode
+            'urlencode' : urllib.quote_plus
         }
 
